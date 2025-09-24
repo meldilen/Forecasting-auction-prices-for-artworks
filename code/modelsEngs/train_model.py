@@ -172,7 +172,7 @@ def main():
     
     if best_model is not None:
         # Save using joblib
-        model_filename = f"art_auction_price_model_{best_model_name.lower()}.pkl"
+        model_filename = f"art_auction_price_model.pkl"
         model_filepath = os.path.join(models_dir, model_filename)
         joblib.dump(best_model, model_filepath)
         

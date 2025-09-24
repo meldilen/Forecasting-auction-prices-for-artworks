@@ -2,23 +2,26 @@ version: '3.8'
 
 services:
   api:
-    build: ./api
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - ../../models:/app/models
-    networks:
-      - art-network
+    container_name: art_price_api
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   app:
-    build: ./app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
     ports:
       - "8501:8501"
+    container_name: art_price_app
+    restart: unless-stopped
     depends_on:
       - api
-    networks:
-      - art-network
-
-networks:
-  art-network:
-    driver: bridge
