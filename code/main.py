@@ -43,11 +43,11 @@ def data_engineering_stage():
     logger.info("=== STAGE 1: Data Engineering ===")
     
     # Run EDA first to combine datasets
-    if not run_script('eda.py', 'EDA processing'):
+    if not run_script('datasets/eda.py', 'EDA processing'):
         return False
     
     # Run preprocessing to clean and prepare data
-    if not run_script('preprocessing.py', 'Data preprocessing'):
+    if not run_script('datasets/preprocessing.py', 'Data preprocessing'):
         return False
     
     logger.info("Data engineering stage completed")
@@ -57,7 +57,7 @@ def model_engineering_stage():
     """Stage 2: Model Engineering"""
     logger.info("=== STAGE 2: Model Engineering ===")
     
-    if not run_script('train_model.py', 'Model training'):
+    if not run_script('modelsEngs/train_model.py', 'Model training'):
         return False
     
     logger.info("Model engineering stage completed")
@@ -94,7 +94,7 @@ def deployment_stage():
 
 def run_pipeline():
     """Run the complete pipeline"""
-    logger.info("🚀 Starting automated pipeline execution")
+    logger.info("Starting automated pipeline execution")
     start_time = datetime.now()
     
     success = True

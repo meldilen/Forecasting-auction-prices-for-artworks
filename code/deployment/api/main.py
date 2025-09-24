@@ -90,6 +90,7 @@ async def model_info():
         "model_type": str(type(model).__name__),
         "features_expected": getattr(model, 'feature_names_in_', []).tolist() if hasattr(model, 'feature_names_in_') else []
     }
+    
 
 if __name__ == "__main__":
     import uvicorn

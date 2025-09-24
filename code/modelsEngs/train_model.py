@@ -112,6 +112,12 @@ def main():
         random_state=42,
         shuffle=True
     )
+
+    train_data_final = pd.concat([X_train, y_train], axis=1)
+    test_data_final = pd.concat([X_test, y_test], axis=1)
+
+    train_data_final.to_csv('../../data/processed/train_data.csv', index=False)
+    test_data_final.to_csv('../../data/processed/test_data.csv', index=False)
     
     # Apply logarithmic transformation to target variable
     y_train_log = np.log1p(y_train)
@@ -209,6 +215,18 @@ def main():
         
         results_filepath = os.path.join(models_dir, "model_predictions.csv")
         results_df.to_csv(results_filepath, index=False)
+        
+        test_metrics = {
+            "rmse": float(best_score),
+            "mae": float(mae),
+            "r2_score": float(r2),
+            "best_model": best_model_name
+        }
+        
+        metrics_filepath = os.path.join(models_dir, "test_metrics.json")
+        with open(metrics_filepath, 'w') as f:
+            json.dump(test_metrics, f, indent=2)
+        print(f"Test metrics saved: {metrics_filepath}")
         
         print(f"Model saved: {model_filepath}")
         print(f"MAE: ${results_df['absolute_error'].mean():,.2f}")
